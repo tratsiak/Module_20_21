@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+    private IInteractable interactableObject;
+
     private void Update()
     {
         HandleInteraction();
@@ -15,10 +17,17 @@ public class InputController : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
-                if (hitInfo.collider.TryGetComponent<IInteractable>(out var interactableObject))
-                {
-                    interactableObject.OnSelect();
-                }
+                interactableObject = hitInfo.collider.GetComponent<IInteractable>();
+
+                interactableObject?.OnSelect();
+            }
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            if (interactableObject != null)
+            {
+                interactableObject.OnRelease();
+                interactableObject = null;
             }
         }
     }
