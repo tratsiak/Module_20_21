@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d43ea1fd7636448adc7c0aefac3d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shooterEffect: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312,
+    type: 3}
 --- !u!4 &39843734
 Transform:
   m_ObjectHideFlags: 0
@@ -619,7 +621,7 @@ GameObject:
   - component: {fileID: 1030943561}
   - component: {fileID: 1030943560}
   - component: {fileID: 1030943559}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
