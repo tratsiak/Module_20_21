@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _shooterEffect;
+    [SerializeField] private LayerMask _groundLayerMask;
+    [SerializeField] private ParticleSystem _shotParticleEffect;
 
     private const int LeftMouseKey = 0;
     private const int RightMouseKey = 1;
 
-    private IDraggable _draggableObject;
+    private DragAndDrop _dragAndDrop;
     private IShooter _shooter;
 
     private void Awake()
     {
-        _shooter = new ExplosionShooter(_shooterEffect, 5, 300); //sorry for magic numbers
+        _dragAndDrop = new DragAndDrop(_groundLayerMask, 50); //sorry for magic numbers
+        _shooter = new RayShooter(new RadialExplosion(5, 1), _shotParticleEffect);
     }
 
     private void Update()
@@ -27,23 +29,17 @@ public class InputController : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hitInfo))
-            {
-                if (hitInfo.collider.TryGetComponent<IDraggable>(out _draggableObject))
-                {
-                    _draggableObject.OnSelect();
-                }
-            }
+            _dragAndDrop.Select(ray.origin, ray.direction);
         }
         else if (Input.GetMouseButton(LeftMouseKey))
         {
-            _draggableObject?.OnDrag(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            _dragAndDrop.Drag(ray.origin, ray.direction);
         }
         else if (Input.GetMouseButtonUp(LeftMouseKey))
         {
-            _draggableObject?.OnRelease();
-
-            _draggableObject = null;
+            _dragAndDrop.Drop();
         }
     }
 
@@ -51,7 +47,9 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(RightMouseKey))
         {
-            _shooter.Shoot();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            _shooter.Shoot(ray.origin, ray.direction);
         }
     }
 }

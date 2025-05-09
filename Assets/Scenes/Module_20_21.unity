@@ -152,7 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d43ea1fd7636448adc7c0aefac3d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shooterEffect: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312,
+  _groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _shotParticleEffect: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312,
     type: 3}
 --- !u!4 &39843734
 Transform:
@@ -369,7 +372,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -4859580600029423755, guid: ec5b15d418b0e174586f2159acdef0d5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
